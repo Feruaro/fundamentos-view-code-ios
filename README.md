@@ -33,3 +33,12 @@ Desvantagens:
   - Demora muito mais para se criar uma tela em ViewCode
 
 ----------------------------
+
+### AppDelegate x SceneDelegate:
+
+#### AppDelegate:
+- Responsável pelo ciclo de vida e configuração do aplicativo
+
+#### SceneDelegate:
+- atualização nova para separar alguns métodos do AppDelegate
+- Responsável pelo o que é mostrado na tela, e com ele podemos manipular e gerenciar a forma como o aplicativo é exibido

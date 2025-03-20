@@ -42,3 +42,25 @@ Desvantagens:
 #### SceneDelegate:
 - atualização nova para separar alguns métodos do AppDelegate
 - Responsável pelo o que é mostrado na tela, e com ele podemos manipular e gerenciar a forma como o aplicativo é exibido
+
+----------------------------
+
+### Lifecycle no Swift:
+
+#### viewDidLoad:
+- primeiro método a ser executado.
+- é disparado dps da renderização (armazenamento na memória) da tela, apenas 1 vez.
+
+#### viewWillAppear:
+- disparado após o viewDidLoad.
+- dispara toda vez que a tela é apresentada.
+
+#### viewDidAppear:
+- disparado após o viewWillAppear.
+- só dispara quando a tela está totalmente sendo exibinda.
+
+#### viewWillDisppear:
+- disparado ao sair da tela
+
+#### viewDidDisppear:
+- disparado quando já saiu da tela

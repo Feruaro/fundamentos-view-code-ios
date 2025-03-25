@@ -15,7 +15,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         let window = UIWindow(windowScene: windowScene)
-        let viewController = ViewController()
+        let viewController = UINavigationController(rootViewController: LoginViewController())
         window.rootViewController = viewController
         window.makeKeyAndVisible() //habilita visualização da tela
         self.window = window

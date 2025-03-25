@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol LoginScreenProtocol:class {
+protocol LoginScreenProtocol:AnyObject {
     func actionLoginButton()
     func actionRegisterButton()
 }
@@ -27,15 +27,6 @@ class LoginScreen: UIView {
         label.font = UIFont.systemFont(ofSize: 30, weight: .bold)
         label.text = "Login"
         return label
-    }()
-    
-    lazy var loginImageLogo: UIImageView = {
-        let imageLogo = UIImageView()
-        imageLogo.translatesAutoresizingMaskIntoConstraints = false
-        imageLogo.image = UIImage(named: "logo")
-        imageLogo.tintColor = .green
-        imageLogo.contentMode = .scaleAspectFit
-        return imageLogo
     }()
     
     lazy var emailLabel: UILabel = {
@@ -81,15 +72,26 @@ class LoginScreen: UIView {
         return textField
     }()
     
+    lazy var forgotPasswordButton: UIButton = {
+        var button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("Esqueceu sua senha?", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
+        button.setTitleColor(.white, for: .normal)
+//        button.addTarget(self, action: #selector(self.tappedRegisterButton), for: .touchUpInside) //pegar a ação do elemento
+        return button
+    }()
+    
     lazy var loginButton: UIButton = {
         var button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Logar", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 20)
-        button.setTitleColor(.white, for: .normal)
+        button.setTitleColor(.lightGray, for: .normal)
+        button.isEnabled = false
         button.clipsToBounds = true
         button.layer.cornerRadius = 8
-        button.backgroundColor = UIColor(red: 25/255, green: 25/255, blue: 112/255, alpha: 1.0)
+        button.backgroundColor = UIColor(red: 128/255, green: 128/255, blue: 128/255, alpha: 1.0)
         button.addTarget(self, action: #selector(self.tappedLoginButton), for: .touchUpInside) //pegar a ação do elemento
         return button
     }()
@@ -99,7 +101,7 @@ class LoginScreen: UIView {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Não tem conta? Cadastre-se", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 18)
-        button.setTitleColor(.white, for: .normal)
+        button.setTitleColor(UIColor(red: 25/255, green: 25/255, blue: 112/255, alpha: 1.0), for: .normal)
         button.addTarget(self, action: #selector(self.tappedRegisterButton), for: .touchUpInside) //pegar a ação do elemento
         return button
     }()
@@ -111,18 +113,18 @@ class LoginScreen: UIView {
         self.setUpConstraints()
     }
     
-    func configSuperView() {
+    private func configSuperView() {
         self.addSubview(self.loginLabel)
-        self.addSubview(self.loginImageLogo)
         self.addSubview(self.emailLabel)
         self.addSubview(self.emailTextField)
         self.addSubview(self.passwordLabel)
         self.addSubview(self.passwordTextField)
+        self.addSubview(self.forgotPasswordButton)
         self.addSubview(self.loginButton)
         self.addSubview(self.registerButton)
     }
     
-    func configTextFieldDelegate(delegate: UITextFieldDelegate) {
+    public func configTextFieldDelegate(delegate: UITextFieldDelegate) {
         self.emailTextField.delegate = delegate
         self.passwordTextField.delegate = delegate
     }
@@ -139,15 +141,27 @@ class LoginScreen: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    public func validaTextFields() {
+        let email: String = self.emailTextField.text ?? ""
+        let password: String = self.passwordTextField.text ?? ""
+        
+        if !email.isEmpty && !password.isEmpty {
+            self.loginButton.setTitleColor(.white, for: .normal)
+            self.loginButton.isEnabled = true
+            self.loginButton.backgroundColor = UIColor(red: 25/255, green: 25/255, blue: 112/255, alpha: 1.0)
+        } else {
+            self.loginButton.setTitleColor(UIColor(red: 192/255, green: 192/255, blue: 192/255, alpha: 1.0), for: .normal)
+            self.loginButton.isEnabled = false
+            self.loginButton.backgroundColor = UIColor(red: 128/255, green: 128/255, blue: 128/255, alpha: 1.0)
+        }
+    }
+    
     private func setUpConstraints() {
         NSLayoutConstraint.activate([
             self.loginLabel.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 40),
             self.loginLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             
-            self.loginImageLogo.topAnchor.constraint(equalTo: self.loginLabel.bottomAnchor, constant: 40),
-            self.loginImageLogo.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            
-            self.emailLabel.topAnchor.constraint(equalTo: self.loginImageLogo.bottomAnchor, constant: 60),
+            self.emailLabel.topAnchor.constraint(equalTo: self.loginLabel.bottomAnchor, constant: 60),
             self.emailLabel.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 64),
             
             self.emailTextField.topAnchor.constraint(equalTo: self.emailLabel.bottomAnchor, constant: 10),
@@ -163,7 +177,10 @@ class LoginScreen: UIView {
             self.passwordTextField.trailingAnchor.constraint(equalTo: self.emailTextField.trailingAnchor),
             self.passwordTextField.heightAnchor.constraint(equalTo: self.emailTextField.heightAnchor),
             
-            self.loginButton.topAnchor.constraint(equalTo: self.passwordTextField.bottomAnchor, constant: 40),
+            self.forgotPasswordButton.topAnchor.constraint(equalTo: self.passwordTextField.bottomAnchor, constant: 5),
+            self.forgotPasswordButton.trailingAnchor.constraint(equalTo: self.emailTextField.trailingAnchor),
+            
+            self.loginButton.topAnchor.constraint(equalTo: self.forgotPasswordButton.bottomAnchor, constant: 40),
             self.loginButton.leadingAnchor.constraint(equalTo: self.emailTextField.leadingAnchor),
             self.loginButton.trailingAnchor.constraint(equalTo: self.emailTextField.trailingAnchor),
             self.loginButton.heightAnchor.constraint(equalTo: self.emailTextField.heightAnchor),

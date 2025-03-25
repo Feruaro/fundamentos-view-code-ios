@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class LoginViewController: UIViewController {
     var loginScreen: LoginScreen?
     
     override func loadView() {
@@ -17,33 +17,30 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationItem.hidesBackButton = true
         self.loginScreen?.delegate(delegate: self)
         self.loginScreen?.configTextFieldDelegate(delegate: self)
     }
-
-    override func viewWillAppear(_ animated: Bool) {
-        self.navigationController?.setNavigationBarHidden(true, animated: false)
-    }
 }
 
-extension ViewController:LoginScreenProtocol {
+extension LoginViewController:LoginScreenProtocol {
     func actionLoginButton() {
         print("login button")
     }
     
     func actionRegisterButton() {
-        print("register button")
+        let vc = CadastroLoginViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 
-extension ViewController: UITextFieldDelegate {
+extension LoginViewController: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
         print("begin")
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        guard let texto = textField.text else { return }
-        print(texto)
+        self.loginScreen?.validaTextFields()
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

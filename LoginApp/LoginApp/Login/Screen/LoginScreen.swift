@@ -87,11 +87,8 @@ class LoginScreen: UIView {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Logar", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 20)
-        button.setTitleColor(.lightGray, for: .normal)
-        button.isEnabled = false
         button.clipsToBounds = true
         button.layer.cornerRadius = 8
-        button.backgroundColor = UIColor(red: 128/255, green: 128/255, blue: 128/255, alpha: 1.0)
         button.addTarget(self, action: #selector(self.tappedLoginButton), for: .touchUpInside) //pegar a ação do elemento
         return button
     }()
@@ -111,6 +108,7 @@ class LoginScreen: UIView {
         self.backgroundColor = UIColor(red: 100/255, green: 149/255, blue: 237/255, alpha: 1.0)
         self.configSuperView()
         self.setUpConstraints()
+        self.validaTextFields()
     }
     
     private func configSuperView() {
@@ -141,6 +139,14 @@ class LoginScreen: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    public func getEmail() -> String {
+        return self.emailTextField.text ?? ""
+    }
+    
+    public func getPassword() -> String {
+        return self.passwordTextField.text ?? ""
+    }
+    
     public func validaTextFields() {
         let email: String = self.emailTextField.text ?? ""
         let password: String = self.passwordTextField.text ?? ""
@@ -151,7 +157,7 @@ class LoginScreen: UIView {
             self.loginButton.backgroundColor = UIColor(red: 25/255, green: 25/255, blue: 112/255, alpha: 1.0)
         } else {
             self.loginButton.setTitleColor(UIColor(red: 192/255, green: 192/255, blue: 192/255, alpha: 1.0), for: .normal)
-            self.loginButton.isEnabled = false
+            self.loginButton.isEnabled = true
             self.loginButton.backgroundColor = UIColor(red: 128/255, green: 128/255, blue: 128/255, alpha: 1.0)
         }
     }

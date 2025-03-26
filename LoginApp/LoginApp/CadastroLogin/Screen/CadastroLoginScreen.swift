@@ -169,6 +169,14 @@ class CadastroLoginScreen: UIView {
         }
     }
     
+    public func getEmail() -> String {
+        return self.emailTextField.text ?? ""
+    }
+    
+    public func getPassword() -> String {
+        return self.passwordTextField.text ?? ""
+    }
+    
     private func setUpConstraints() {
         NSLayoutConstraint.activate([
             self.backButton.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 0),

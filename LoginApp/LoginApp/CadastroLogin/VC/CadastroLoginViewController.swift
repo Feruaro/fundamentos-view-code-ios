@@ -6,10 +6,13 @@
 //
 
 import UIKit
+import Firebase
 
 class CadastroLoginViewController: UIViewController {
     
     var cadastroScreen: CadastroLoginScreen?
+    var auth: Auth?
+    var alert: Alert?
     
     override func loadView() {
         self.cadastroScreen = CadastroLoginScreen()
@@ -21,31 +24,34 @@ class CadastroLoginViewController: UIViewController {
         self.navigationItem.hidesBackButton = true
         self.cadastroScreen?.delegate(self)
         self.cadastroScreen?.configTextFieldDelegate(self)
+        self.auth = Auth.auth()
+        self.alert = Alert(controller: self)
     }
-
 }
 
 extension CadastroLoginViewController: CadastroLoginProtocol {
     func actionBackButton() {
-        let vc = LoginViewController()
-        self.navigationController?.pushViewController(vc, animated: false)
+        self.navigationController?.popViewController(animated: true)
     }
     
     func actionRegisterButton() {
-        print("botão cadastrar")
+        guard let register = self.cadastroScreen else { return }
+        
+        self.auth?.createUser(withEmail: register.getEmail(), password: register.getPassword(), completion: {(result, error) in
+                if error != nil {
+                    guard let messageError = error?.localizedDescription else { return }
+                    self.alert?.getAlert(title: "Atenção", message: "\(String(describing: messageError))")
+                } else {
+                    self.alert?.getAlert(title: "Parabéns!", message: "Usuário cadastrado com sucesso.", completion: {
+                        self.actionBackButton()
+                    })
+                }
+        })
     }
 }
 
 extension CadastroLoginViewController: UITextFieldDelegate {
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        print("begin")
-    }
-    
     func textFieldDidEndEditing(_ textField: UITextField) {
         self.cadastroScreen?.validaTextFields()
-    }
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
     }
 }

@@ -14,7 +14,7 @@ Vantagens:
 
 Desvantagens:
   - Resolver conflitos de merge
-  - Sem controle do fluxo de inicialização∏
+  - Sem controle do fluxo de inicialização
   - Pouco conhecimento sobre as propriedades dos elementos nativos
 
 
@@ -31,6 +31,13 @@ Desvantagens:
   - Não é visual
   - Complexidade
   - Demora muito mais para se criar uma tela em ViewCode
+
+----------------------------
+
+#### Transformando um Projeto Storyboard para ViewCode:
+1. Excluir o arquivo `main.Storyboard`
+2. No arquivo `Info` procurar (command + f) por `main` e excluir o item `Storyboard Name`
+3. Na aba `Build Settings` procurar (command + f) por `main` e apagar o value Main do item `UIKit Main Storyboard File Base Name`, irá ficar com value vazio.
 
 ----------------------------
 

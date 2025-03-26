@@ -14,7 +14,7 @@ Vantagens:
 
 Desvantagens:
   - Resolver conflitos de merge
-  - Sem controle do fluxo de inicialização
+  - Sem controle do fluxo de inicialização∏
   - Pouco conhecimento sobre as propriedades dos elementos nativos
 
 
@@ -64,3 +64,13 @@ Desvantagens:
 
 #### viewDidDisppear:
 - disparado quando já saiu da tela
+
+----------------------------
+
+### CocoaPod:
+
+- Gerenciador de dependências
+- As dependências do projeto são adicionados no arquivo Podfile
+- Para instalar: `gem install cocoapods` ou `brew install cocoapods`
+- Para criar o arquivo Podfiles: vá pelo terminal até a pasta raiz do projeto e rode o comando `pod init`
+- Para adicionar uma depência: abre o arquivo e adicione a depência, após isso rode no terminal, na pasta raiz do projeto, o comando `pod install`
